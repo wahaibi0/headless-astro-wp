@@ -1,0 +1,41 @@
+---
+component: "index"
+---
+<template>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Astro + WP</title>
+    </head>
+    <body>
+        <h1>Astro Headless WP</h1>
+        <!-- Content will be appended here -->
+        <script type="module">
+            // Define the getPosts function
+            async function getPosts() {
+				//NOTE: Change permalink to posts instead of plain
+                const response = await fetch("http://localhost:8080/wp-json/wp/v2/posts");
+                const posts = await response.json();
+                return posts;
+            }
+
+            // Log the output of getPosts function
+            async function logPosts() {
+                try {
+                    const posts = await getPosts();
+                    console.log("Posts:", posts);
+                } catch (error) {
+                    console.error("Error fetching posts:", error);
+                }
+            }
+
+            // Call the logPosts function to execute the code
+            logPosts();
+        </script>
+    </body>
+    </html>
+</template>
